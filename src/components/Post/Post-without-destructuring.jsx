@@ -1,5 +1,4 @@
 import React from "react";
-
 import "./Post.css";
 
 //title, body , image, author
