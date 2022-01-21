@@ -1,8 +1,8 @@
 import React from "react";
 import "./Posts.css";
-import axios from "axios";
 import Post from "../Post/Post";
-import axiosClient from "../../helpers/axiosClient";
+import {axiosAuthClient} from "../../helpers/axiosClient";
+import authHeader from "../../helpers/apiHeader";
 
 class Posts extends React.Component {
 
@@ -25,8 +25,8 @@ class Posts extends React.Component {
     }
 
     refreshList = () => {
-        axiosClient
-            .get("api/films/")
+        axiosAuthClient
+            .get("blogs", {headers: authHeader})
             .then(res => this.setState({items: res.data}))
             .catch(err => console.log(err));
     };

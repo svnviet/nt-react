@@ -1,34 +1,44 @@
-import axiosClient from "../../helpers/axiosClient";
+import axiosClient from "../../../helpers/axiosClient"
 
 const userAuth = {
-    login(data) {
+    login(username, password) {
         const url = 'token/';
+        const data = {
+            'username': username,
+            'password': password
+        }
         return axiosClient.post(url, data)
             .then((res) => {
-                if (res.data.accessToken) {
-                    localStorage.setItem("refresh", JSON.stringify(res.data.refresh));
-                    refreshJWTokenApi(axiosClient)
+                if (res.data.access) {
+                    localStorage.setItem("user", JSON.stringify(res.data));
+                    console.log(localStorage.getItem("user"))
+                    // refreshJWTokenApi(axiosClient)
                     return res.data
                 }
+                console.log('django', res)
                 return res.data
             });
     },
 
-    logout() {
+    logOut() {
         console.log('logout')
-        localStorage.removeItem("refresh")
+        localStorage.removeItem("user")
     },
 
     register(data) {
         console.log(data);
         return axiosClient.post('res_user/register/', data).then((res) => {
             console.log(res);
-            if (res.data.accessToken) {
+            if (res.data.access) {
                 localStorage.setItem("user", JSON.stringify(res.data));
             }
             return res.data;
         })
-    }
+    },
+
+    getCurrentUser() {
+        return JSON.parse(localStorage.getItem("user"));
+    },
 }
 
 

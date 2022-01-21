@@ -1,10 +1,19 @@
 import axios from 'axios';
+import authHeader from "./apiHeader";
+
+let API_VERSION = "/api/v1"
+let BASE_URL = "http://127.0.0.1:8888"
 
 const axiosClient = axios.create({
-    baseURL: 'http://127.0.0.1:8888/',
+    baseURL: BASE_URL + API_VERSION,
     headers: {
         'content-type': 'application/json',
     }
+})
+
+const axiosAuthClient = axios.create({
+    baseURL: BASE_URL + API_VERSION,
+    headers: authHeader,
 })
 
 
@@ -29,4 +38,5 @@ axios.interceptors.response.use(function (response) {
 });
 
 
-export default axiosClient
+export default axiosClient;
+export {axiosAuthClient};
